@@ -39,7 +39,7 @@ defmodule Angle.Gradian do
   """
   @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
   def parse(value) do
-    case Regex.run(~r/^[0-9]+(?:\.[0-9]+)?/, value) do
+    case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
         case string_to_number(value) do
           {:ok, n} -> {:ok, init(n)}
@@ -109,4 +109,24 @@ defmodule Angle.Gradian do
     |> to_gradians()
   end
 
+  @doc """
+  Convert the angle to it's absolute value by discarding complete revolutions
+  and converting negatives.
+
+  ## Examples
+
+      iex> ~a(-300)g
+      ...> |> Angle.Gradian.abs()
+      #Angle<100ᵍ>
+
+      iex> ~a(1300)g
+      ...> |> Angle.Gradian.abs()
+      #Angle<100ᵍ>
+  """
+  @spec abs(Angle.t) :: Angle.t
+  def abs(%Angle{g: g}), do: init(calculate_abs(g))
+
+  defp calculate_abs(g) when g >= 0 and g <= 400, do: g
+  defp calculate_abs(g) when g > 400, do: calculate_abs(g - 400)
+  defp calculate_abs(g) when g < 0, do: calculate_abs(g + 400)
 end

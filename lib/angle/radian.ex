@@ -1,8 +1,11 @@
 defmodule Angle.Radian do
   import Angle.Utils, only: [string_to_number: 1]
+
   @moduledoc """
   Functions relating to dealing with angles in Radians.
   """
+
+  @two_pi 2 * :math.pi()
 
   @doc """
   Initialize an Angle from a number `n` of radians
@@ -20,7 +23,7 @@ defmodule Angle.Radian do
   def init(n) when is_number(n), do: %Angle{r: n}
 
   @doc """
-  Attempt to arse decimal radians.
+  Attempt to parse decimal radians.
 
   ## Examples
 
@@ -35,10 +38,13 @@ defmodule Angle.Radian do
 
       iex> "13.2㎭" |> parse() |> inspect()
       "{:ok, #Angle<13.2㎭>}"
+
+      iex> "-13.2㎭" |> parse() |> inspect()
+      "{:ok, #Angle<-13.2㎭>}"
   """
   @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
   def parse(value) do
-    case Regex.run(~r/^[0-9]+(?:\.[0-9]+)?/, value) do
+    case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
         case string_to_number(value) do
           {:ok, n} -> {:ok, init(n)}
@@ -94,12 +100,12 @@ defmodule Angle.Radian do
 
   ## Examples
 
-      iex> use Angle
-      ...> ~a(90)d
-      ...> |> Angle.Radian.to_radians()
+      iex> ~a(90)d
+      ...> |> to_radians()
       ...> |> inspect()
       "{#Angle<90°>, 1.5707963267948966}"
   """
+  @spec to_radians(Angle.t) :: {Angle.t, number}
   def to_radians(%Angle{r: number} = angle) when is_number(number), do: {angle, number}
   def to_radians(angle) do
     angle
@@ -107,4 +113,24 @@ defmodule Angle.Radian do
     |> to_radians()
   end
 
+  @doc """
+  Convert the angle to it's absolute value by discarding complete revolutions
+  and converting negatives.
+
+  ## Examples
+
+      iex> ~a(-4.71238898038469)r
+      ...> |> Angle.Radian.abs()
+      #Angle<1.5707963267948966㎭>
+
+      iex> ~a(20.420352248333657)r
+      ...> |> Angle.Radian.abs()
+      #Angle<1.5707963267948983㎭>
+  """
+  @spec abs(Angle.t) :: Angle.t
+  def abs(%Angle{r: r}), do: init(calculate_abs(r))
+
+  defp calculate_abs(r) when r >= 0 and r <= @two_pi, do: r
+  defp calculate_abs(r) when r > @two_pi, do: calculate_abs(r - @two_pi)
+  defp calculate_abs(r) when r < 0, do: calculate_abs(r + @two_pi)
 end

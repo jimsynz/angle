@@ -5,7 +5,7 @@ defmodule Angle.DMS do
   Functions relating to dealing with angles in Degrees, Minutes and Seconds.
   """
 
-  @parser ~r/([0-9]+)
+  @parser ~r/(-?[0-9]+)
              (?:[\x{00b0},\ ]?\ *)
              ([0-9]+)
              (?:[\x{2032}',\ ]?\ *)
@@ -63,6 +63,9 @@ defmodule Angle.DMS do
 
       iex> "166°45′58.46″" |> parse() |> inspect()
       "{:ok, #Angle<166° 45′ 58.46″>}"
+
+      iex> "-166° 45′ 58.46″" |> parse() |> inspect()
+      "{:ok, #Angle<-166° 45′ 58.46″>}"
   """
   @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
   def parse(value) do
@@ -136,4 +139,26 @@ defmodule Angle.DMS do
   @spec to_dms(Angle.t) :: {Angle.t, {integer, integer, number}}
   def to_dms(%Angle{dms: {d, m, s}} = angle), do: {angle, {d, m, s}}
   def to_dms(%Angle{} = angle), do: angle |> ensure() |> to_dms()
+
+  @doc """
+  Convert the angle to it's absolute value by discarding complete revolutions
+  and converting negatives.
+
+  ## Examples
+
+      iex> ~a(-270,15,45)dms
+      ...> |> Angle.DMS.abs()
+      #Angle<90° 45′ 15″>
+
+      iex> ~a(1170,0,0)dms
+      ...> |> Angle.DMS.abs()
+      #Angle<90°>
+  """
+  @spec abs(Angle.t) :: Angle.t
+  def abs(%Angle{dms: {d, m, s}}), do: %Angle{dms: calculate_abs(d, m, s)}
+
+  defp calculate_abs(d, m, s) when d >= 0 and d <= 360, do: {d, m, s}
+  defp calculate_abs(d, m, s) when d > 360, do: calculate_abs(d - 360, m, s)
+  defp calculate_abs(d, m, s) when d < -360, do: calculate_abs(d + 360, m, s)
+  defp calculate_abs(d, m, s) when d < 0, do: calculate_abs(d + 360, 60 - m, 60 - s)
 end
