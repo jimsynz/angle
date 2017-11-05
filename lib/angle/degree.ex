@@ -35,10 +35,13 @@ defmodule Angle.Degree do
 
       iex> "13.2°" |> parse() |> inspect()
       "{:ok, #Angle<13.2°>}"
+
+      iex> "-13.2°" |> parse() |> inspect()
+      "{:ok, #Angle<-13.2°>}"
   """
   @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
   def parse(value) do
-    case Regex.run(~r/^[0-9]+(?:\.[0-9]+)?/, value) do
+    case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
         case string_to_number(value) do
           {:ok, n} -> {:ok, init(n)}
@@ -100,4 +103,25 @@ defmodule Angle.Degree do
   @spec to_degrees(Angle.t) :: {Angle.t, number}
   def to_degrees(%Angle{d: number} = angle) when is_number(number), do: {angle, number}
   def to_degrees(angle), do: angle |> ensure() |> to_degrees()
+
+  @doc """
+  Convert the angle to it's absolute value by discarding complete revolutions
+  and converting negatives.
+
+  ## Examples
+
+      iex> ~a(-270)d
+      ...> |> Angle.Degree.abs()
+      #Angle<90°>
+
+      iex> ~a(1170)d
+      ...> |> Angle.Degree.abs()
+      #Angle<90°>
+  """
+  @spec abs(Angle.t) :: Angle.t
+  def abs(%Angle{d: d}), do: init(calculate_abs(d))
+
+  defp calculate_abs(d) when d >= 0 and d <= 360, do: d
+  defp calculate_abs(d) when d > 360, do: calculate_abs(d - 360)
+  defp calculate_abs(d) when d < 0, do: calculate_abs(d + 360)
 end
