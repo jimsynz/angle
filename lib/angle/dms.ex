@@ -1,6 +1,7 @@
 defmodule Angle.DMS do
   import Angle.Utils, only: [string_to_integer: 1, string_to_number: 1]
   alias Angle.Degree
+
   @moduledoc """
   Functions relating to dealing with angles in Degrees, Minutes and Seconds.
   """
@@ -20,7 +21,7 @@ defmodule Angle.DMS do
       iex> init(13)
       #Angle<13°>
   """
-  @spec init(integer) :: Angle.t
+  @spec init(integer) :: Angle.t()
   def init(d) when is_integer(d), do: %Angle{dms: {d, 0, 0}}
 
   @doc """
@@ -32,7 +33,7 @@ defmodule Angle.DMS do
       iex> init(13, 30)
       #Angle<13° 30′>
   """
-  @spec init(integer, integer) :: Angle.t
+  @spec init(integer, integer) :: Angle.t()
   def init(d, m) when is_integer(d) and is_integer(m), do: %Angle{dms: {d, m, 0}}
 
   @doc """
@@ -44,8 +45,9 @@ defmodule Angle.DMS do
       iex> init(13, 30, 45)
       #Angle<13° 30′ 45″>
   """
-  @spec init(integer, integer, number) :: Angle.t
-  def init(d, m, s) when is_integer(d) and is_integer(m) and is_number(s), do: %Angle{dms: {d, m, s}}
+  @spec init(integer, integer, number) :: Angle.t()
+  def init(d, m, s) when is_integer(d) and is_integer(m) and is_number(s),
+    do: %Angle{dms: {d, m, s}}
 
   @doc """
   Attempt to parse a string of degrees, minutes and seconds.
@@ -67,17 +69,18 @@ defmodule Angle.DMS do
       iex> "-166° 45′ 58.46″" |> parse() |> inspect()
       "{:ok, #Angle<-166° 45′ 58.46″>}"
   """
-  @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
+  @spec parse(String.t()) :: {:ok, Angle.t()} | {:error, term}
   def parse(value) do
     case Regex.run(@parser, value) do
       [_, d, m, s] ->
         with {:ok, d} <- string_to_integer(d),
              {:ok, m} <- string_to_integer(m),
-             {:ok, s} <- string_to_number(s)
-        do
+             {:ok, s} <- string_to_number(s) do
           {:ok, init(d, m, s)}
         end
-      _ -> {:error, "Unable to parse value as DMS"}
+
+      _ ->
+        {:error, "Unable to parse value as DMS"}
     end
   end
 
@@ -107,9 +110,10 @@ defmodule Angle.DMS do
       ...> |> Map.get(:dms)
       {90, 30, 0.0}
   """
-  @spec ensure(Angle.t) :: Angle.t
+  @spec ensure(Angle.t()) :: Angle.t()
   def ensure(%Angle{dms: {d, m, s}} = angle)
-  when is_integer(d) and is_integer(m) and is_number(s), do: angle
+      when is_integer(d) and is_integer(m) and is_number(s),
+      do: angle
 
   def ensure(%Angle{d: real_degrees} = angle) when is_number(real_degrees) do
     d = trunc(real_degrees)
@@ -136,7 +140,7 @@ defmodule Angle.DMS do
       ...> |> inspect()
       "{#Angle<28.64788975654116°>, {28, 38, 52.403123548181156}}"
   """
-  @spec to_dms(Angle.t) :: {Angle.t, {integer, integer, number}}
+  @spec to_dms(Angle.t()) :: {Angle.t(), {integer, integer, number}}
   def to_dms(%Angle{dms: {d, m, s}} = angle), do: {angle, {d, m, s}}
   def to_dms(%Angle{} = angle), do: angle |> ensure() |> to_dms()
 
@@ -154,7 +158,7 @@ defmodule Angle.DMS do
       ...> |> Angle.DMS.abs()
       #Angle<90°>
   """
-  @spec abs(Angle.t) :: Angle.t
+  @spec abs(Angle.t()) :: Angle.t()
   def abs(%Angle{dms: {d, m, s}}), do: %Angle{dms: calculate_abs(d, m, s)}
 
   defp calculate_abs(d, m, s) when d >= 0 and d <= 360, do: {d, m, s}

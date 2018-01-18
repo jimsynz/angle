@@ -17,9 +17,15 @@ defmodule Angle.Radian do
 
       iex> init(13.2)
       #Angle<13.2㎭>
+
+      iex> init(0)
+      #Angle<0>
+
+      iex> init(0.0)
+      #Angle<0>
   """
-  @spec init(number) :: Angle.t
-  def init(0), do: Angle.zero()
+  @spec init(number) :: Angle.t()
+  def init(n) when n == 0, do: Angle.zero()
   def init(n) when is_number(n), do: %Angle{r: n}
 
   @doc """
@@ -42,7 +48,7 @@ defmodule Angle.Radian do
       iex> "-13.2㎭" |> parse() |> inspect()
       "{:ok, #Angle<-13.2㎭>}"
   """
-  @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
+  @spec parse(String.t()) :: {:ok, Angle.t()} | {:error, term}
   def parse(value) do
     case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
@@ -50,6 +56,7 @@ defmodule Angle.Radian do
           {:ok, n} -> {:ok, init(n)}
           {:error, _} -> {:error, "Unable to parse value as radians"}
         end
+
       _ ->
         {:error, "Unable to parse value as radians"}
     end
@@ -76,7 +83,7 @@ defmodule Angle.Radian do
       ...> |> Map.get(:r)
       1.5707963267948966
   """
-  @spec ensure(Angle.t) :: Angle.t
+  @spec ensure(Angle.t()) :: Angle.t()
   def ensure(%Angle{r: radians} = angle) when is_number(radians), do: angle
 
   def ensure(%Angle{d: degrees} = angle) when is_number(degrees) do
@@ -90,7 +97,7 @@ defmodule Angle.Radian do
   end
 
   def ensure(%Angle{dms: {d, m, s}} = angle) when is_integer(d) and is_integer(m) and is_number(s) do
-    degrees = d + (m / 60.0) + (s / 3600.0)
+    degrees = d + m / 60.0 + s / 3600.0
     radians = degrees / 180.0 * :math.pi()
     %{angle | r: radians}
   end
@@ -105,8 +112,9 @@ defmodule Angle.Radian do
       ...> |> inspect()
       "{#Angle<90°>, 1.5707963267948966}"
   """
-  @spec to_radians(Angle.t) :: {Angle.t, number}
+  @spec to_radians(Angle.t()) :: {Angle.t(), number}
   def to_radians(%Angle{r: number} = angle) when is_number(number), do: {angle, number}
+
   def to_radians(angle) do
     angle
     |> ensure()
@@ -127,7 +135,7 @@ defmodule Angle.Radian do
       ...> |> Angle.Radian.abs()
       #Angle<1.5707963267948983㎭>
   """
-  @spec abs(Angle.t) :: Angle.t
+  @spec abs(Angle.t()) :: Angle.t()
   def abs(%Angle{r: r}), do: init(calculate_abs(r))
 
   defp calculate_abs(r) when r >= 0 and r <= @two_pi, do: r

@@ -119,9 +119,11 @@ defmodule Angle do
       ...> |> Angle.abs()
       #Angle<100ᵍ>
   """
-  @spec abs(Angle.t) :: Angle.t
+  @spec abs(Angle.t()) :: Angle.t()
   def abs(%Angle{r: r} = angle) when is_number(r), do: Radian.abs(angle)
   def abs(%Angle{d: d} = angle) when is_number(d), do: Degree.abs(angle)
   def abs(%Angle{g: g} = angle) when is_number(g), do: Gradian.abs(angle)
-  def abs(%Angle{dms: {d, m, s}} = angle) when is_number(d) and is_number(m) and is_number(s), do: DMS.abs(angle)
+
+  def abs(%Angle{dms: {d, m, s}} = angle) when is_number(d) and is_number(m) and is_number(s),
+    do: DMS.abs(angle)
 end

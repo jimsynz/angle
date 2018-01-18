@@ -37,7 +37,7 @@ defmodule Angle.Sigil do
       ...> ~a(0)
       #Angle<0>
   """
-  @spec sigil_a(String.t, list) :: Angle.t
+  @spec sigil_a(String.t(), list) :: Angle.t()
   def sigil_a("0", _modifiers), do: Angle.zero()
 
   def sigil_a(value, 'd') do

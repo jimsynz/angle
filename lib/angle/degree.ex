@@ -1,5 +1,6 @@
 defmodule Angle.Degree do
   import Angle.Utils, only: [string_to_number: 1]
+
   @moduledoc """
   Functions relating to dealing with angles in real Degrees.
   """
@@ -14,9 +15,15 @@ defmodule Angle.Degree do
 
       iex> init(13.2)
       #Angle<13.2°>
+
+      iex> init(0)
+      #Angle<0>
+
+      iex> init(0.0)
+      #Angle<0>
   """
-  @spec init(number) :: Angle.t
-  def init(0), do: Angle.zero()
+  @spec init(number) :: Angle.t()
+  def init(n) when n == 0, do: Angle.zero()
   def init(n) when is_number(n), do: %Angle{d: n}
 
   @doc """
@@ -39,7 +46,7 @@ defmodule Angle.Degree do
       iex> "-13.2°" |> parse() |> inspect()
       "{:ok, #Angle<-13.2°>}"
   """
-  @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
+  @spec parse(String.t()) :: {:ok, Angle.t()} | {:error, term}
   def parse(value) do
     case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
@@ -47,6 +54,7 @@ defmodule Angle.Degree do
           {:ok, n} -> {:ok, init(n)}
           {:error, _} -> {:error, "Unable to parse value as degrees"}
         end
+
       _ ->
         {:error, "Unable to parse value as degrees"}
     end
@@ -73,7 +81,7 @@ defmodule Angle.Degree do
       ...> |> Map.get(:d)
       77.84888888888888
   """
-  @spec ensure(Angle.t) :: Angle.t
+  @spec ensure(Angle.t()) :: Angle.t()
   def ensure(%Angle{d: degrees} = angle) when is_number(degrees), do: angle
 
   def ensure(%Angle{r: radians} = angle) when is_number(radians) do
@@ -87,7 +95,7 @@ defmodule Angle.Degree do
   end
 
   def ensure(%Angle{dms: {d, m, s}} = angle) when is_integer(d) and is_integer(m) and is_number(s) do
-    %{angle | d: d + (m / 60.0) + (s / 3600.0)}
+    %{angle | d: d + m / 60.0 + s / 3600.0}
   end
 
   @doc """
@@ -100,7 +108,7 @@ defmodule Angle.Degree do
       ...> |> inspect()
       "{#Angle<28.64788975654116°>, 28.64788975654116}"
   """
-  @spec to_degrees(Angle.t) :: {Angle.t, number}
+  @spec to_degrees(Angle.t()) :: {Angle.t(), number}
   def to_degrees(%Angle{d: number} = angle) when is_number(number), do: {angle, number}
   def to_degrees(angle), do: angle |> ensure() |> to_degrees()
 
@@ -118,7 +126,7 @@ defmodule Angle.Degree do
       ...> |> Angle.Degree.abs()
       #Angle<90°>
   """
-  @spec abs(Angle.t) :: Angle.t
+  @spec abs(Angle.t()) :: Angle.t()
   def abs(%Angle{d: d}), do: init(calculate_abs(d))
 
   defp calculate_abs(d) when d >= 0 and d <= 360, do: d
