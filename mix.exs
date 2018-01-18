@@ -5,14 +5,14 @@ defmodule Angle.Mixfile do
   Tired of forever converting back and forwards between degrees and radians?
   Well worry no more; Angle is here to make your life simple!
   """
-  @version "0.2.0"
+  @version "0.2.1"
 
   def project do
     [
       app: :angle,
       version: @version,
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       package: package(),
       description: @description,
       deps: deps()
@@ -28,8 +28,8 @@ defmodule Angle.Mixfile do
 
   def package do
     [
-      maintainers: [ "James Harton <james@automat.nz>" ],
-      licenses: [ "MIT" ],
+      maintainers: ["James Harton <james@automat.nz>"],
+      licenses: ["MIT"],
       links: %{
         "Source" => "https://gitlab.com/jimsy/angle"
       }

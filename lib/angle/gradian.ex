@@ -1,6 +1,7 @@
 defmodule Angle.Gradian do
   import Angle.Utils, only: [string_to_number: 1]
   alias Angle.Degree
+
   @moduledoc """
   Functions relating to dealing with angles in Gradians.
   """
@@ -15,9 +16,15 @@ defmodule Angle.Gradian do
 
       iex> init(13.2)
       #Angle<13.2ᵍ>
+
+      iex> init(0)
+      #Angle<0>
+
+      iex> init(0.0)
+      #Angle<0>
   """
-  @spec init(number) :: Angle.t
-  def init(0), do: Angle.zero()
+  @spec init(number) :: Angle.t()
+  def init(n) when n == 0, do: Angle.zero()
   def init(n) when is_number(n), do: %Angle{g: n}
 
   @doc """
@@ -37,7 +44,7 @@ defmodule Angle.Gradian do
       iex> "13.2ᵍ" |> parse() |> inspect()
       "{:ok, #Angle<13.2ᵍ>}"
   """
-  @spec parse(String.t) :: {:ok, Angle.t} | {:error, term}
+  @spec parse(String.t()) :: {:ok, Angle.t()} | {:error, term}
   def parse(value) do
     case Regex.run(~r/^-?[0-9]+(?:\.[0-9]+)?/, value) do
       [value] ->
@@ -45,6 +52,7 @@ defmodule Angle.Gradian do
           {:ok, n} -> {:ok, init(n)}
           {:error, _} -> {:error, "Unable to parse value as gradians"}
         end
+
       _ ->
         {:error, "Unable to parse value as gradians"}
     end
@@ -71,7 +79,7 @@ defmodule Angle.Gradian do
       ...> |> Map.get(:g)
       100.0
   """
-  @spec ensure(Angle.t) :: Angle.t
+  @spec ensure(Angle.t()) :: Angle.t()
   def ensure(%Angle{g: gradians} = angle) when is_number(gradians), do: angle
 
   def ensure(%Angle{r: radians} = angle) when is_number(radians) do
@@ -101,8 +109,9 @@ defmodule Angle.Gradian do
       ...> |> inspect()
       "{#Angle<0.5㎭>, 31.830988618379067}"
   """
-  @spec to_gradians(Angle.t) :: {Angle.t, number}
+  @spec to_gradians(Angle.t()) :: {Angle.t(), number}
   def to_gradians(%Angle{g: number} = angle) when is_number(number), do: {angle, number}
+
   def to_gradians(angle) do
     angle
     |> ensure()
@@ -123,7 +132,7 @@ defmodule Angle.Gradian do
       ...> |> Angle.Gradian.abs()
       #Angle<100ᵍ>
   """
-  @spec abs(Angle.t) :: Angle.t
+  @spec abs(Angle.t()) :: Angle.t()
   def abs(%Angle{g: g}), do: init(calculate_abs(g))
 
   defp calculate_abs(g) when g >= 0 and g <= 400, do: g

@@ -12,7 +12,7 @@ defmodule Angle.Utils do
       iex> "13.2" |> string_to_integer()
       {:error, "Unable to convert value to integer"}
   """
-  @spec string_to_integer(String.t) :: {:ok, integer} | {:error, term}
+  @spec string_to_integer(String.t()) :: {:ok, integer} | {:error, term}
   def string_to_integer(value) do
     {:ok, String.to_integer(value)}
   rescue
@@ -30,7 +30,7 @@ defmodule Angle.Utils do
       iex> "13" |> string_to_float()
       {:error, "Unable to convert value to float"}
   """
-  @spec string_to_float(String.t) :: {:ok, float} | {:error, term}
+  @spec string_to_float(String.t()) :: {:ok, float} | {:error, term}
   def string_to_float(value) do
     {:ok, String.to_float(value)}
   rescue
@@ -51,14 +51,17 @@ defmodule Angle.Utils do
       {:error, "Unable to convert value to number"}
 
   """
-  @spec string_to_number(String.t) :: {:ok, float | integer} | {:error, term}
+  @spec string_to_number(String.t()) :: {:ok, float | integer} | {:error, term}
   def string_to_number(value) do
     case string_to_float(value) do
-      {:ok, value} -> {:ok, value}
-      {:error, _} -> case string_to_integer(value) do
-        {:ok, value} -> {:ok, value}
-        {:error, _} -> {:error, "Unable to convert value to number"}
-      end
+      {:ok, value} ->
+        {:ok, value}
+
+      {:error, _} ->
+        case string_to_integer(value) do
+          {:ok, value} -> {:ok, value}
+          {:error, _} -> {:error, "Unable to convert value to number"}
+        end
     end
   end
 end

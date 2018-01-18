@@ -20,13 +20,13 @@ defmodule Angle.Trig do
 
       iex> Angle.Trig.acos(1)
       ...> |> inspect()
-      "{:ok, #Angle<0.0㎭>}"
+      "{:ok, #Angle<0>}"
 
       iex> Angle.Trig.acos(-1)
       ...> |> inspect()
       "{:ok, #Angle<3.141592653589793㎭>}"
   """
-  @spec acos(number) :: {:ok, Angle.t} | {:error, term}
+  @spec acos(number) :: {:ok, Angle.t()} | {:error, term}
   def acos(x) when x >= -1 and x <= 1, do: x |> :math.acos() |> r()
   def acos(_), do: {:error, "Invalid function domain"}
 
@@ -38,13 +38,13 @@ defmodule Angle.Trig do
 
       iex> Angle.Trig.acosh(1)
       ...> |> inspect()
-      "{:ok, #Angle<0.0㎭>}"
+      "{:ok, #Angle<0>}"
 
       iex> Angle.Trig.acosh(2)
       ...> |> inspect()
       "{:ok, #Angle<1.3169578969248166㎭>}"
   """
-  @spec acosh(number) :: {:ok, Angle.t} | {:error, term}
+  @spec acosh(number) :: {:ok, Angle.t()} | {:error, term}
   def acosh(x) when x >= 1, do: x |> :math.acosh() |> r()
   def acosh(_), do: {:error, "Invalid function domain"}
 
@@ -56,13 +56,13 @@ defmodule Angle.Trig do
 
       iex> Angle.Trig.asin(0)
       ...> |> inspect()
-      "{:ok, #Angle<0.0㎭>}"
+      "{:ok, #Angle<0>}"
 
       iex> Angle.Trig.asin(1)
       ...> |> inspect()
       "{:ok, #Angle<1.5707963267948966㎭>}"
   """
-  @spec asin(number) :: {:ok, Angle.t} | {:error, term}
+  @spec asin(number) :: {:ok, Angle.t()} | {:error, term}
   def asin(x) when x >= -1 and x <= 1, do: x |> :math.asin() |> r()
   def asin(_), do: {:error, "Invalid function domain"}
 
@@ -79,7 +79,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{:ok, #Angle<0.881373587019543㎭>}"
   """
-  @spec asinh(number) :: {:ok, Angle.t} | {:error, term}
+  @spec asinh(number) :: {:ok, Angle.t()} | {:error, term}
   def asinh(x) when is_number(x), do: x |> :math.asinh() |> r()
   def asinh(_x), do: {:error, "Invalid function domain"}
 
@@ -97,7 +97,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{:ok, #Angle<0.7853981633974483㎭>}"
   """
-  @spec atan(number) :: {:ok, Angle.t} | {:error, term}
+  @spec atan(number) :: {:ok, Angle.t()} | {:error, term}
   def atan(x) when is_number(x), do: x |> :math.atan() |> r()
   def atan(_x), do: {:error, "Invalid function domain"}
 
@@ -115,7 +115,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{:ok, #Angle<0.4636476090008061㎭>}"
   """
-  @spec atan2(number, number) :: {:ok, Angle.t} | {:error, term}
+  @spec atan2(number, number) :: {:ok, Angle.t()} | {:error, term}
   def atan2(x, y) when is_number(x) and is_number(y), do: x |> :math.atan2(y) |> r()
   def atan2(_x, _y), do: {:error, "Invalid function domain"}
 
@@ -134,7 +134,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<180°>, -1.0}"
   """
-  @spec cos(Angle.t) :: {Angle.t, float}
+  @spec cos(Angle.t()) :: {Angle.t(), float}
   def cos(%Angle{r: nil} = angle), do: angle |> ensure() |> cos()
   def cos(%Angle{r: r} = angle), do: {angle, :math.cos(r)}
 
@@ -150,7 +150,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<0>, 1.0}"
   """
-  @spec cosh(Angle.t) :: {Angle.t, float}
+  @spec cosh(Angle.t()) :: {Angle.t(), float}
   def cosh(%Angle{r: nil} = angle), do: angle |> ensure() |> cosh()
   def cosh(%Angle{r: r} = angle), do: {angle, :math.cosh(r)}
 
@@ -169,7 +169,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<90°>, 1.0}"
   """
-  @spec sin(Angle.t) :: {Angle.t, float}
+  @spec sin(Angle.t()) :: {Angle.t(), float}
   def sin(%Angle{r: nil} = angle), do: angle |> ensure() |> sin()
   def sin(%Angle{r: r} = angle), do: {angle, :math.sin(r)}
 
@@ -185,7 +185,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<0>, 0.0}"
   """
-  @spec sinh(Angle.t) :: {Angle.t, float}
+  @spec sinh(Angle.t()) :: {Angle.t(), float}
   def sinh(%Angle{r: nil} = angle), do: angle |> ensure() |> sinh()
   def sinh(%Angle{r: r} = angle), do: {angle, :math.sinh(r)}
 
@@ -204,7 +204,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<0>, 0.0}"
   """
-  @spec tan(Angle.t) :: {Angle.t, float}
+  @spec tan(Angle.t()) :: {Angle.t(), float}
   def tan(%Angle{r: nil} = angle), do: angle |> ensure() |> tan()
   def tan(%Angle{r: r} = angle), do: {angle, :math.tan(r)}
 
@@ -220,7 +220,7 @@ defmodule Angle.Trig do
       ...> |> inspect()
       "{#Angle<0>, 0.0}"
   """
-  @spec tanh(Angle.t) :: {Angle.t, float}
+  @spec tanh(Angle.t()) :: {Angle.t(), float}
   def tanh(%Angle{r: nil} = angle), do: angle |> ensure() |> tanh()
   def tanh(%Angle{r: r} = angle), do: {angle, :math.tanh(r)}
 
