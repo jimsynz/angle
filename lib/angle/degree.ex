@@ -94,7 +94,8 @@ defmodule Angle.Degree do
     %{angle | d: degrees}
   end
 
-  def ensure(%Angle{dms: {d, m, s}} = angle) when is_integer(d) and is_integer(m) and is_number(s) do
+  def ensure(%Angle{dms: {d, m, s}} = angle)
+      when is_integer(d) and is_integer(m) and is_number(s) do
     %{angle | d: d + m / 60.0 + s / 3600.0}
   end
 

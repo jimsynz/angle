@@ -96,7 +96,8 @@ defmodule Angle.Radian do
     %{angle | r: radians}
   end
 
-  def ensure(%Angle{dms: {d, m, s}} = angle) when is_integer(d) and is_integer(m) and is_number(s) do
+  def ensure(%Angle{dms: {d, m, s}} = angle)
+      when is_integer(d) and is_integer(m) and is_number(s) do
     degrees = d + m / 60.0 + s / 3600.0
     radians = degrees / 180.0 * :math.pi()
     %{angle | r: radians}

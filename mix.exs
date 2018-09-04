@@ -5,7 +5,7 @@ defmodule Angle.Mixfile do
   Tired of forever converting back and forwards between degrees and radians?
   Well worry no more; Angle is here to make your life simple!
   """
-  @version "0.2.1"
+  @version "0.3.0"
 
   def project do
     [
@@ -41,8 +41,8 @@ defmodule Angle.Mixfile do
     [
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:credo, "~> 0.6", only: ~w(dev test)a, runtime: false},
-      {:inch_ex, "~> 0.5", only: ~w(dev test)a, runtime: false},
+      {:credo, "~> 0.10", only: ~w(dev test)a, runtime: false},
+      {:inch_ex, "~> 1.0", only: ~w(dev test)a, runtime: false},
       {:dialyxir, "~> 0.5", only: ~w(dev test)a, runtime: false}
     ]
   end

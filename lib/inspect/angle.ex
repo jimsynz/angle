@@ -34,7 +34,8 @@ defimpl Inspect, for: Angle do
     concat(["#Angle<", to_doc(d, opts), @degrees, " ", to_doc(m, opts), @prime, ">"])
   end
 
-  def inspect(%Angle{dms: {d, m, s}}, opts) when is_integer(d) and is_integer(m) and is_number(s) do
+  def inspect(%Angle{dms: {d, m, s}}, opts)
+      when is_integer(d) and is_integer(m) and is_number(s) do
     concat([
       "#Angle<",
       to_doc(d, opts),
