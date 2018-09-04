@@ -1,6 +1,6 @@
 defmodule Angle do
   defstruct ~w(d r g dms)a
-  alias Angle.{Radian, Gradian, Degree, DMS, Trig}
+  alias Angle.{Degree, DMS, Gradian, Radian, Trig}
 
   @moduledoc """
   Tired of forever converting back and forwards between degrees and radians?

@@ -1,6 +1,6 @@
 defmodule Angle.Sigil do
   alias Angle
-  alias Angle.{InvalidAngle, Radian, Degree, Gradian, DMS}
+  alias Angle.{Degree, DMS, Gradian, InvalidAngle, Radian}
 
   @moduledoc """
   This module defines the `~a` macros.  To use it just `use Angle`.
