@@ -17,11 +17,11 @@ before_script:
 
 test:
   script:
-     - mix test
+    - mix test
 
 credo:
   script:
-     - mix credo --strict
+    - mix credo
 
 audit:
   script:
@@ -30,7 +30,6 @@ audit:
 format:
   script:
     - mix format --check-formatted
-
 # inch:
 #   script:
 #      - mix inch --pedantic
