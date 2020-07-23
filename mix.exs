@@ -43,7 +43,7 @@ defmodule Angle.Mixfile do
       {:earmark, ">= 0.0.0", only: :dev},
       {:credo, "~> 1.1", only: ~w(dev test)a, runtime: false},
       {:inch_ex, "~> 2.0", only: ~w(dev test)a, runtime: false},
-      {:dialyxir, "~> 0.5", only: ~w(dev test)a, runtime: false}
+      {:dialyxir, "~> 1.0", only: ~w(dev test)a, runtime: false}
     ]
   end
 end
