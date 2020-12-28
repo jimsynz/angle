@@ -60,7 +60,7 @@ by adding `angle` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:angle, "~> 0.1.0"}
+    {:angle, "~> 0.3.0"}
   ]
 end
 ```
