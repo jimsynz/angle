@@ -1,6 +1,6 @@
 # Angle
 
-[![pipeline status](https://gitlab.com/jimsy/angle/badges/master/pipeline.svg)](https://gitlab.com/jimsy/angle/commits/master)
+[![pipeline status](https://gitlab.com/jimsy/angle/badges/main/pipeline.svg)](https://gitlab.com/jimsy/angle/commits/main)
 [![Hex.pm](https://img.shields.io/hexpm/v/angle.svg)](https://hex.pm/packages/angle)
 
 Tired of forever converting back and forwards between degrees and radians?
