@@ -29,7 +29,7 @@ defmodule Angle.Mixfile do
   def package do
     [
       maintainers: ["James Harton <james@harton.nz>"],
-      licenses: ["MIT"],
+      licenses: ["HL3-FULL"],
       links: %{
         "Source" => "https://gitlab.com/jimsy/angle"
       }
