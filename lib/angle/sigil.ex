@@ -40,28 +40,28 @@ defmodule Angle.Sigil do
   @spec sigil_a(String.t(), list) :: Angle.t()
   def sigil_a("0", _modifiers), do: Angle.zero()
 
-  def sigil_a(value, 'd') do
+  def sigil_a(value, ~c"d") do
     case Degree.parse(value) do
       {:ok, angle} -> angle
       {:error, msg} -> raise InvalidAngle, message: msg
     end
   end
 
-  def sigil_a(value, 'r') do
+  def sigil_a(value, ~c"r") do
     case Radian.parse(value) do
       {:ok, angle} -> angle
       {:error, msg} -> raise InvalidAngle, message: msg
     end
   end
 
-  def sigil_a(value, 'g') do
+  def sigil_a(value, ~c"g") do
     case Gradian.parse(value) do
       {:ok, angle} -> angle
       {:error, msg} -> raise InvalidAngle, message: msg
     end
   end
 
-  def sigil_a(value, 'dms') do
+  def sigil_a(value, ~c"dms") do
     case DMS.parse(value) do
       {:ok, angle} -> angle
       {:error, msg} -> raise InvalidAngle, message: msg
