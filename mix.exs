@@ -31,7 +31,7 @@ defmodule Angle.Mixfile do
       maintainers: ["James Harton <james@harton.nz>"],
       licenses: ["HL3-FULL"],
       links: %{
-        "Source" => "https://gitlab.com/jimsy/angle"
+        "Source" => "https://harton.dev/james/angle"
       }
     ]
   end
@@ -39,9 +39,11 @@ defmodule Angle.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.6", only: ~w[dev test]a, runtime: false},
+      {:dialyxir, "~> 1.4", only: ~w[dev test]a, runtime: false},
+      {:doctor, "~> 0.21", only: ~w[dev test]a, runtime: false},
       {:ex_doc, "~> 0.30", only: ~w[dev test]a, runtime: false},
       {:earmark, "~> 1.4", only: ~w[dev test]a, runtime: false},
-      {:credo, "~> 1.6", only: ~w[dev test]a, runtime: false},
       {:git_ops, "~> 2.4", only: ~w[dev test]a, runtime: false}
     ]
   end

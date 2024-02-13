@@ -1,6 +1,6 @@
 # Angle
 
-[![pipeline status](https://gitlab.com/jimsy/angle/badges/main/pipeline.svg)](https://gitlab.com/jimsy/angle/commits/main)
+[![Build Status](https://drone.harton.dev/api/badges/james/angle/status.svg)](https://drone.harton.dev/james/angle)
 [![Hex.pm](https://img.shields.io/hexpm/v/angle.svg)](https://hex.pm/packages/angle)
 [![Hippocratic License HL3-FULL](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-FULL&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/full.html)
 
@@ -70,6 +70,12 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/angle](https://hexdocs.pm/angle).
 
+## Github Mirror
+
+This repository is mirrored [on Github](https://github.com/jimsynz/angle)
+from it's primary location [on my Forejo instance](https://harton.dev/james/angle).
+Feel free to raise issues and open PRs on Github.
+
 ## License
 
 This software is licensed under the terms of the
@@ -77,7 +83,7 @@ This software is licensed under the terms of the
 this package for the terms.
 
 This license actively proscribes this software being used by and for some
-industries, countries and activities.  If your usage of this software doesn't
+industries, countries and activities. If your usage of this software doesn't
 comply with the terms of this license, then [contact me](mailto:james@harton.nz)
 with the details of your use-case to organise the purchase of a license - the
 cost of which may include a donation to a suitable charity or NGO.
