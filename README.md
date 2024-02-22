@@ -55,7 +55,7 @@ Returning the radian representation of an angle
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+Angle is [available in Hex](https://hex.pm/packages/angle), the package can be installed
 by adding `angle` to your list of dependencies in `mix.exs`:
 
 ```elixir
@@ -66,9 +66,9 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/angle](https://hexdocs.pm/angle).
+Documentation for the latest release can be found on
+[HexDocs](https://hexdocs.pm/angle) and for the `main` branch on
+[docs.harton.nz](https://docs.harton.nz/james/angle).
 
 ## Github Mirror
 
