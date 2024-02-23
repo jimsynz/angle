@@ -5,7 +5,7 @@ defmodule Angle.Mixfile do
   Tired of forever converting back and forwards between degrees and radians?
   Well worry no more; Angle is here to make your life simple!
   """
-  @version "1.0.0"
+  @version "1.0.1"
 
   def project do
     [
