@@ -15,7 +15,11 @@ defmodule Angle.Mixfile do
       start_permanent: Mix.env() == :prod,
       package: package(),
       description: @description,
-      deps: deps()
+      deps: deps(),
+      docs: [
+        main: "readme",
+        extras: ["README.md", "CHANGELOG.md"]
+      ]
     ]
   end
 
@@ -31,7 +35,10 @@ defmodule Angle.Mixfile do
       maintainers: ["James Harton <james@harton.nz>"],
       licenses: ["HL3-FULL"],
       links: %{
-        "Source" => "https://harton.dev/james/angle"
+        "Source" => "https://harton.dev/james/angle",
+        "GitHub" => "https://github.com/jimsynz/angle",
+        "Changelog" => "https://docs.harton.nz/james/angle/changelog.html",
+        "Sponsor" => "https://github.com/sponsors/jimsynz"
       }
     ]
   end
