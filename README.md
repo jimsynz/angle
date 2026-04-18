@@ -1,6 +1,5 @@
 # Angle
 
-[![Build Status](https://drone.harton.dev/api/badges/james/angle/status.svg)](https://drone.harton.dev/james/angle)
 [![Hex.pm](https://img.shields.io/hexpm/v/angle.svg)](https://hex.pm/packages/angle)
 [![Hippocratic License HL3-FULL](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-FULL&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/full.html)
 
@@ -67,8 +66,7 @@ end
 ```
 
 Documentation for the latest release can be found on
-[HexDocs](https://hexdocs.pm/angle) and for the `main` branch on
-[docs.harton.nz](https://docs.harton.nz/james/angle).
+[HexDocs](https://hexdocs.pm/angle).
 
 ## Github Mirror
 
