@@ -48,7 +48,7 @@ defmodule Angle.Mixfile do
     [
       {:credo, "~> 1.6", only: ~w[dev test]a, runtime: false},
       {:dialyxir, "~> 1.4", only: ~w[dev test]a, runtime: false},
-      {:doctor, "~> 0.22", only: ~w[dev test]a, runtime: false},
+      {:doctor, "~> 0.23", only: ~w[dev test]a, runtime: false},
       {:ex_check, "~> 0.16", only: ~w[dev test]a, runtime: false},
       {:ex_doc, "~> 0.40", only: ~w[dev test]a, runtime: false},
       {:git_ops, "~> 2.4", only: ~w[dev test]a, runtime: false}
